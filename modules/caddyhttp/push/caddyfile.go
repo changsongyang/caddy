@@ -71,13 +71,15 @@ func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error)
 					handler.Headers = new(HeaderConfig)
 				}
 
+				empty := ""
+
 				switch len(args) {
 				case 1:
-					err = headers.CaddyfileHeaderOp(&handler.Headers.HeaderOps, args[0], "", "")
+					err = headers.CaddyfileHeaderOp(&handler.Headers.HeaderOps, args[0], "", &empty)
 				case 2:
-					err = headers.CaddyfileHeaderOp(&handler.Headers.HeaderOps, args[0], args[1], "")
+					err = headers.CaddyfileHeaderOp(&handler.Headers.HeaderOps, args[0], args[1], &empty)
 				case 3:
-					err = headers.CaddyfileHeaderOp(&handler.Headers.HeaderOps, args[0], args[1], args[2])
+					err = headers.CaddyfileHeaderOp(&handler.Headers.HeaderOps, args[0], args[1], &args[2])
 				default:
 					return nil, h.ArgErr()
 				}
